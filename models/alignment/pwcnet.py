@@ -31,8 +31,8 @@ def backwarp(tenInput, tenFlow):
                                                 mode='bilinear', padding_mode='zeros', align_corners=False)
 
     tenMask = tenOutput[:, -1:, :, :]
-    tenMask[tenMask > 0.999] = 1.0
-    tenMask[tenMask < 1.0] = 0.0
+    tenMask = torch.where(tenMask > 0.999, torch.tensor(1.0, dtype=tenMask.dtype, device=tenMask.device), tenMask)
+    tenMask = torch.where(tenMask < 1.0, torch.tensor(0.0, dtype=tenMask.dtype, device=tenMask.device), tenMask)
 
     return tenOutput[:, :-1, :, :].contiguous() * tenMask.contiguous()
 
