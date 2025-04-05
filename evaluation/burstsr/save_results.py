@@ -21,6 +21,7 @@ if env_path not in sys.path:
 
 from dataset.burstsr_dataset import get_burstsr_val_set
 import torch
+import intel_npu_acceleration_library
 
 import argparse
 import importlib

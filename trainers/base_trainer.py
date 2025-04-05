@@ -2,7 +2,7 @@ import os
 import glob
 import torch
 import traceback
-from admin import loading, multigpu
+from admin import loading
 
 
 class BaseTrainer:

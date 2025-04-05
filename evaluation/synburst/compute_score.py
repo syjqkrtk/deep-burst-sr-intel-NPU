@@ -21,6 +21,7 @@ if env_path not in sys.path:
 
 from dataset.synthetic_burst_val_set import SyntheticBurstVal
 import torch
+import intel_npu_acceleration_library
 
 from models.loss.image_quality_v2 import PSNR, SSIM, LPIPS
 from evaluation.common_utils.display_utils import generate_formatted_report

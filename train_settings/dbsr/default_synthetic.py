@@ -13,13 +13,14 @@
 # limitations under the License.
 
 import torch.optim as optim
+import torch
+import intel_npu_acceleration_library
 import dataset as datasets
 from data import processing, sampler, DataLoader
 import models.dbsr.dbsrnet as dbsr_nets
 import actors.dbsr_actors as dbsr_actors
 from trainers import SimpleTrainer
 import data.transforms as tfm
-from admin.multigpu import MultiGPU
 from models.loss.image_quality_v2 import PSNR, PixelWiseError
 
 
@@ -27,7 +28,6 @@ def run(settings):
     settings.description = 'Default settings for training DBSR models on synthetic burst dataset '
     settings.batch_size = 16
     settings.num_workers = 8
-    settings.multi_gpu = False
     settings.print_interval = 1
 
     settings.crop_sz = (384, 384)
@@ -81,9 +81,8 @@ def run(settings):
                                      icnrinit=True
                                      )
 
-    # Wrap the network for multi GPU training
-    if settings.multi_gpu:
-        net = MultiGPU(net, dim=0)
+    # Wrap the network for Intel NPU training
+    net = torch.compile(net, backend="npu")
 
     objective = {'rgb': PixelWiseError(metric='l1', boundary_ignore=40), 'psnr': PSNR(boundary_ignore=40)}
 

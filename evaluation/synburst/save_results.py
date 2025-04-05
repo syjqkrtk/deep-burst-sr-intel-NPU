@@ -20,6 +20,7 @@ if env_path not in sys.path:
     sys.path.append(env_path)
 
 import torch
+import intel_npu_acceleration_library
 
 import argparse
 import importlib

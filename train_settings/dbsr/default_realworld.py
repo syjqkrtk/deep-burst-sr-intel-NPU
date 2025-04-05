@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import torch.optim as optim
-import torch.compile as complie
+import torch
+import intel_npu_acceleration_library
 import dataset as datasets
 from data import processing, sampler, DataLoader
 import actors.dbsr_actors as dbsr_actors
@@ -29,7 +30,6 @@ def run(settings):
     settings.batch_size = 12
     crop_sz = 56
     settings.num_workers = 8
-    settings.multi_gpu = False
     settings.print_interval = 1
 
     settings.burst_sz = 8
@@ -59,7 +59,7 @@ def run(settings):
     net = load_network('dbsr/default_synthetic')
 
     # Wrap the network for intel NPU training
-    net = compile(net, backend="npu")
+    net = torch.compile(net, backend="npu")
 
     bi = 40
     objective = {

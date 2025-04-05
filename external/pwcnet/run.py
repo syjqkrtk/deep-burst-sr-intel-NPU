@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import torch
+import intel_npu_acceleration_library
 
 import getopt
 import math
