@@ -4,7 +4,6 @@ import argparse
 import importlib
 import multiprocessing
 import cv2 as cv
-import torch.backends.cudnn
 
 env_path = os.path.join(os.path.dirname(__file__))
 if env_path not in sys.path:
@@ -23,8 +22,6 @@ def run_training(train_module, train_name, cudnn_benchmark=True):
 
     # This is needed to avoid strange crashes related to opencv
     cv.setNumThreads(0)
-
-    torch.backends.cudnn.benchmark = cudnn_benchmark
 
     print('Training:  {}  {}'.format(train_module, train_name))
 

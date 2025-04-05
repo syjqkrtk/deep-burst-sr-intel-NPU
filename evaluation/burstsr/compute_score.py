@@ -49,7 +49,6 @@ def compute_score(setting_name, load_saved=False):
     dataset = get_burstsr_val_set()
 
     metrics = ('psnr', 'ssim', 'lpips')
-    device = 'cuda'
     boundary_ignore = 40
     metrics_all = {}
     scores = {}
@@ -92,8 +91,7 @@ def compute_score(setting_name, load_saved=False):
 
         if not using_saved_results:
             net = n.load_net()
-            device = 'cuda'
-            net.to(device).train(False)
+            net = torch.compile(net, backend="npu").train(False)
 
         # len(dataset)
         for idx in tqdm.tqdm(range(len(dataset))):

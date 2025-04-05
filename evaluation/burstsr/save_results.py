@@ -46,8 +46,7 @@ def save_results(setting_name):
         os.makedirs(out_dir, exist_ok=True)
 
         net = n.load_net()
-        device = 'cuda'
-        net.to(device).train(False)
+        net = torch.compile(net, backend="npu").train(False)
 
         for idx in tqdm.tqdm(range(len(dataset))):
             data = dataset[idx]

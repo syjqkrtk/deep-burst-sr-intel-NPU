@@ -43,8 +43,7 @@ def save_results(setting_name):
 
     for n in network_list:
         net = n.load_net()
-        device = 'cuda'
-        net.to(device).train(False)
+        net = torch.compile(net, backend="npu").train(False)
 
         out_dir = '{}/synburst/{}'.format(base_results_dir, n.get_unique_name())
         os.makedirs(out_dir, exist_ok=True)

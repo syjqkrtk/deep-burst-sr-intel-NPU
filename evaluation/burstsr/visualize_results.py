@@ -65,8 +65,7 @@ def visualize_results(setting_name):
             results_dir = '{}/burstsr/{}'.format(base_results_dir, n.get_unique_name())
             net_pred = cv2.imread('{}/{}.png'.format(results_dir, burst_name),
                                   cv2.IMREAD_UNCHANGED)
-            pred = (torch.from_numpy(net_pred.astype(np.float32)) / 2 ** 14).permute(2, 0, 1).float().to(
-                'cuda').unsqueeze(0)
+            pred = (torch.from_numpy(net_pred.astype(np.float32)) / 2 ** 14).permute(2, 0, 1).float()).unsqueeze(0)
 
             pred_proc_np = CanonImage.generate_processed_image(pred[0].cpu(), meta_info_burst, return_np=True,
                                                                gamma=True,

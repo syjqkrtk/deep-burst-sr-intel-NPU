@@ -13,12 +13,12 @@
 # limitations under the License.
 
 import torch.optim as optim
+import torch.compile as complie
 import dataset as datasets
 from data import processing, sampler, DataLoader
 import actors.dbsr_actors as dbsr_actors
 from trainers import SimpleTrainer
 from utils.loading import load_network
-from admin.multigpu import MultiGPU
 from models.loss.image_quality_v2 import PixelWiseError, PSNR
 from models.alignment.pwcnet import PWCNet
 from admin.environment import env_settings
@@ -58,9 +58,8 @@ def run(settings):
 
     net = load_network('dbsr/default_synthetic')
 
-    # Wrap the network for multi GPU training
-    if settings.multi_gpu:
-        net = MultiGPU(net, dim=0)
+    # Wrap the network for intel NPU training
+    net = compile(net, backend="npu")
 
     bi = 40
     objective = {

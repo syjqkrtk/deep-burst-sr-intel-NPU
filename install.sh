@@ -19,8 +19,9 @@ conda activate $conda_env_name
 
 echo ""
 echo ""
-echo "****************** Installing pytorch with cuda10.2 ******************"
-conda install -y pytorch torchvision cudatoolkit=10.2 -c pytorch
+echo "****************** Installing pytorch with intel-NPU ******************"
+conda install -y pytorch torchvision -c pytorch
+pip install intel-npu-acceleration-library
 
 echo ""
 echo ""
