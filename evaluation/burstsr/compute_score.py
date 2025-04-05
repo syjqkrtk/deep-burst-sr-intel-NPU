@@ -60,7 +60,6 @@ def compute_score(setting_name, load_saved=False):
             loss_fn = SSIM(boundary_ignore=boundary_ignore, use_for_loss=False)
         elif m == 'lpips':
             loss_fn = LPIPS(boundary_ignore=boundary_ignore)
-            loss_fn.to(device)
         else:
             raise Exception
         metrics_all[m] = loss_fn
@@ -71,7 +70,6 @@ def compute_score(setting_name, load_saved=False):
     pwcnet = PWCNet(load_pretrained=True,
                     weights_path='{}/pwcnet-network-default.pth'.format(env_settings().pretrained_nets_dir))
     sca_module = SpatialColorAlignment(pwcnet.eval(), sr_factor=4)
-    sca_module.to(device)
 
     for n in network_list:
         scores = {k: [] for k, v in scores.items()}
@@ -101,15 +99,12 @@ def compute_score(setting_name, load_saved=False):
             burst = data['burst'].unsqueeze(0)
             burst_name = data['burst_name']
 
-            burst = burst.to(device)
-            gt = gt.to(device)
-
             if n.burst_sz is not None:
                 burst = burst[:, :n.burst_sz]
 
             if using_saved_results:
                 net_pred = cv2.imread('{}/{}.png'.format(out_dir, burst_name), cv2.IMREAD_UNCHANGED)
-                net_pred = (torch.from_numpy(net_pred.astype(np.float32)) / 2 ** 14).permute(2, 0, 1).float().to(device)
+                net_pred = (torch.from_numpy(net_pred.astype(np.float32)) / 2 ** 14).permute(2, 0, 1).float()
                 net_pred = net_pred.unsqueeze(0)
             else:
                 with torch.no_grad():

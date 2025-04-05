@@ -26,11 +26,7 @@ class BaseActor:
         raise NotImplementedError
 
     def to(self, device):
-        """ Move the network to device
-        args:
-            device - device to use. 'cpu' or 'cuda'
-        """
-        self.net.to(device)
+        self.net
 
     def train(self, mode=True):
         """ Set whether the network is in train mode.

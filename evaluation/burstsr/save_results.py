@@ -54,8 +54,6 @@ def save_results(setting_name):
             burst = data['burst'].unsqueeze(0)
             burst_name = data['burst_name']
 
-            burst = burst.to(device)
-
             if n.burst_sz is not None:
                 burst = burst[:, :n.burst_sz]
 

@@ -58,12 +58,8 @@ class DBSRRealWorldActor(BaseActor):
         self.loss_weight = loss_weight
 
     def to(self, device):
-        """ Move the network to device
-        args:
-            device - device to use. 'cpu' or 'cuda'
-        """
-        self.net.to(device)
-        self.sca.to(device)
+        self.net
+        self.sca
 
     def __call__(self, data):
         # Run network

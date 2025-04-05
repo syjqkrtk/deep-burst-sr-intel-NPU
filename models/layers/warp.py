@@ -28,8 +28,8 @@ def warp(feat, flow, mode='bilinear', padding_mode='zeros'):
     B, C, H, W = feat.size()
 
     # mesh grid
-    rowv, colv = torch.meshgrid([torch.arange(0.5, H + 0.5, device=feat.device),
-                                 torch.arange(0.5, W + 0.5, device=feat.device)])
+    rowv, colv = torch.meshgrid([torch.arange(0.5, H + 0.5),
+                                 torch.arange(0.5, W + 0.5)])
     grid = torch.stack((colv, rowv), dim=0).unsqueeze(0).float()
     grid = grid + flow
 

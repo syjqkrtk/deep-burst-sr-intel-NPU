@@ -58,7 +58,6 @@ def compute_score(setting_name, load_saved=False):
             loss_fn = SSIM(boundary_ignore=boundary_ignore, use_for_loss=False)
         elif m == 'lpips':
             loss_fn = LPIPS(boundary_ignore=boundary_ignore)
-            loss_fn.to(device)
         else:
             raise Exception
         metrics_all[m] = loss_fn
@@ -91,15 +90,14 @@ def compute_score(setting_name, load_saved=False):
             burst, gt, meta_info = dataset[idx]
             burst_name = meta_info['burst_name']
 
-            burst = burst.to(device).unsqueeze(0)
-            gt = gt.to(device)
+            burst = burst.unsqueeze(0)
 
             if n.burst_sz is not None:
                 burst = burst[:, :n.burst_sz]
 
             if using_saved_results:
                 net_pred = cv2.imread('{}/{}.png'.format(out_dir, burst_name), cv2.IMREAD_UNCHANGED)
-                net_pred = (torch.from_numpy(net_pred.astype(np.float32)) / 2 ** 14).permute(2, 0, 1).float().to(device)
+                net_pred = (torch.from_numpy(net_pred.astype(np.float32)) / 2 ** 14).permute(2, 0, 1).float()
                 net_pred = net_pred.unsqueeze(0)
             else:
                 with torch.no_grad():

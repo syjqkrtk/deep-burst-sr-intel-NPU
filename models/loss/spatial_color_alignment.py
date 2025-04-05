@@ -24,7 +24,6 @@ def match_colors(im_ref, im_q, im_test, ksz, gauss_kernel):
     """ Estimates a color transformation matrix between im_ref and im_q. Applies the estimated transformation to
         im_test
     """
-    gauss_kernel = gauss_kernel.to(im_ref.device)
     bi = 5
 
     # Apply Gaussian smoothing
@@ -77,12 +76,8 @@ class SpatialColorAlignment(nn.Module):
         self.gauss_kernel, self.ksz = get_gaussian_kernel(sd=1.5)
 
     def to(self, device):
-        """ Move the network to device
-        args:
-            device - device to use. 'cpu' or 'cuda'
-        """
-        self.alignment_net.to(device)
-        self.gauss_kernel = self.gauss_kernel.to(device)
+        self.alignment_net
+        self.gauss_kernel = self.gauss_kernel
 
     def forward(self, pred, gt, burst_input):
         # Estimate flow between the prediction and the ground truth

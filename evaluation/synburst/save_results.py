@@ -53,7 +53,7 @@ def save_results(setting_name):
             burst, _, meta_info = dataset[idx]
             burst_name = meta_info['burst_name']
 
-            burst = burst.to(device).unsqueeze(0)
+            burst = burst.unsqueeze(0)
 
             if n.burst_sz is not None:
                 burst = burst[:, :n.burst_sz]

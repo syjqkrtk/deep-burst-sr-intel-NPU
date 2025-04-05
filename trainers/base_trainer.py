@@ -29,12 +29,6 @@ class BaseTrainer:
         self.epoch = 0
         self.stats = {}
 
-        self.device = getattr(settings, 'device', None)
-        if self.device is None:
-            self.device = torch.device("cpu")
-
-        self.actor.to(self.device)
-
     def update_settings(self, settings=None):
         """Updates the trainer settings. Must be called to update internal settings."""
         if settings is not None:
@@ -92,7 +86,7 @@ class BaseTrainer:
     def save_checkpoint(self):
         """Saves a checkpoint of the network and other variables."""
 
-        net = self.actor.net.module if multigpu.is_multi_gpu(self.actor.net) else self.actor.net
+        net = self.actor.net
 
         actor_type = type(self.actor).__name__
         net_type = type(net).__name__
@@ -133,7 +127,7 @@ class BaseTrainer:
                 Loads the file from the given absolute path (str).
         """
 
-        net = self.actor.net.module if multigpu.is_multi_gpu(self.actor.net) else self.actor.net
+        net = self.actor.net
 
         actor_type = type(self.actor).__name__
         net_type = type(net).__name__

@@ -14,13 +14,12 @@ backwarp_tenPartial = {}
 
 
 def backwarp(tenInput, tenFlow):
-    device = tenInput.device
-    key = str(tenFlow.shape) + str(device)
+    key = str(tenFlow.shape)
     if key not in backwarp_tenGrid:
         tenHor = torch.linspace(-1.0 + (1.0 / tenFlow.shape[3]), 1.0 - (1.0 / tenFlow.shape[3]), tenFlow.shape[3]).view(1, 1, 1, -1).expand(-1, -1, tenFlow.shape[2], -1)
         tenVer = torch.linspace(-1.0 + (1.0 / tenFlow.shape[2]), 1.0 - (1.0 / tenFlow.shape[2]), tenFlow.shape[2]).view(1, 1, -1, 1).expand(-1, -1, -1, tenFlow.shape[3])
 
-        backwarp_tenGrid[key] = torch.cat([tenHor, tenVer], 1).to(device)
+        backwarp_tenGrid[key] = torch.cat([tenHor, tenVer], 1)
 
     if key not in backwarp_tenPartial:
         backwarp_tenPartial[key] = tenFlow.new_ones([ tenFlow.shape[0], 1, tenFlow.shape[2], tenFlow.shape[3] ])

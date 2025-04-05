@@ -61,7 +61,7 @@ class PixShuffleUpsampler(nn.Module):
             shape = out.shape
             out = out.view(-1, 1, *shape[-2:])
             gauss_ksz = getattr(self, 'gauss_ksz', 3)
-            out = F.conv2d(out, self.gauss_kernel.to(out.device), padding=(gauss_ksz - 1) // 2)
+            out = F.conv2d(out, self.gauss_kernel, padding=(gauss_ksz - 1) // 2)
             out = out.view(shape)
         return out
 

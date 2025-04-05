@@ -92,10 +92,10 @@ class WeightedSum(nn.Module):
             if getattr(self, 'ref_offset_noise', 0.0) > 0.0:
                 # If ref_offset_noise > 0, add some noise to the offests of reference image (originally all zeros) so
                 # that the network cannot learn to use only the reference frame embeddings
-                offsets_base = torch.rand((shape[0], 1, 2, *shape[-2:])).float().to(ref_feat.device) * 2 * \
+                offsets_base = torch.rand((shape[0], 1, 2, *shape[-2:])).float() * 2 * \
                                getattr(self, 'ref_offset_noise', 0.0) - getattr(self, 'ref_offset_noise', 0.0)
             else:
-                offsets_base = torch.zeros((shape[0], 1, 2, *shape[-2:])).float().to(ref_feat.device)
+                offsets_base = torch.zeros((shape[0], 1, 2, *shape[-2:])).float()
 
             offsets_all = torch.cat((offsets_base, offsets), dim=1)
             offsets_all = offsets_all.view(-1, *offsets_all.shape[-3:])

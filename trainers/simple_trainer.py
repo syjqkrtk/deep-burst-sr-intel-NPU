@@ -64,10 +64,6 @@ class SimpleTrainer(BaseTrainer):
         self._init_timing()
 
         for i, data in enumerate(loader, 1):
-            # get inputs
-            if self.move_data_to_gpu:
-                data = data.to(self.device)
-
             data['epoch'] = self.epoch
             data['settings'] = self.settings
 
