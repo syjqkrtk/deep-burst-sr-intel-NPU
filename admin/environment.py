@@ -46,5 +46,5 @@ def env_settings():
         return env_module.EnvironmentSettings()
     except:
         env_file = os.path.join(os.path.dirname(__file__), 'local.py')
-        create_default_local_file()
+        # create_default_local_file()
         raise RuntimeError('YOU HAVE NOT SETUP YOUR local.py!!!\n Go to "{}" and set all the paths you need. Then try to run again.'.format(env_file))
