@@ -26,8 +26,8 @@ from models.loss.image_quality_v2 import PSNR, PixelWiseError
 
 def run(settings):
     settings.description = 'Default settings for training DBSR models on synthetic burst dataset '
-    settings.batch_size = 16
-    settings.num_workers = 8
+    settings.batch_size = 1
+    settings.num_workers = 1
     settings.print_interval = 1
 
     settings.crop_sz = (384, 384)

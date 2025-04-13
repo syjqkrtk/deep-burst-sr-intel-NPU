@@ -27,9 +27,9 @@ from admin.environment import env_settings
 
 def run(settings):
     settings.description = 'Default settings for fine-tuning a DBSR model on BurstSR dataset'
-    settings.batch_size = 12
+    settings.batch_size = 1
     crop_sz = 56
-    settings.num_workers = 8
+    settings.num_workers = 1
     settings.print_interval = 1
 
     settings.burst_sz = 8
@@ -72,6 +72,7 @@ def run(settings):
 
     pwcnet = PWCNet(load_pretrained=True,
                     weights_path='{}/pwcnet-network-default.pth'.format(env_settings().pretrained_nets_dir))
+
     actor = dbsr_actors.DBSRRealWorldActor(net=net, objective=objective, loss_weight=loss_weight, alignment_net=pwcnet)
 
     optimizer = optim.Adam([{'params': actor.net.parameters(), 'lr': 1e-4}],
